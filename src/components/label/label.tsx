@@ -15,9 +15,9 @@ const Label = () => {
             </div>
 
             <div className="label__right">
-                <p>Hi</p>
-                <p>Hi</p>
-                <p>Hi</p>
+                <img src="https://placehold.co/100x100" alt="Placeholder" />
+                <img src="https://placehold.co/100x100" alt="Placeholder" />
+                <img src="https://placehold.co/100x100" alt="Placeholder" />
             </div>
         </div>
     );

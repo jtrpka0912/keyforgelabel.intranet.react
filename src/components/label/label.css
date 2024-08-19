@@ -39,10 +39,9 @@
         justify-content: center;
         height: 100%;
 
-        /*Temp*/
-        p {
-            margin: 0;
-            padding: 0;
+        img {
+            max-width: 20px;
+            height: auto;
         }
     }
 }

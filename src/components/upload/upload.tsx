@@ -1,3 +1,5 @@
+import './upload.css';
+
 /**
  * @function UploadButton
  * @description The floating action button to bring up the upload pop-up
@@ -6,7 +8,9 @@
  */
 const UploadButton = () => {
     return (
-        <button>Upload</button>
+        <button
+            className="upload__button"
+        >Upload</button>
     );
 };
 

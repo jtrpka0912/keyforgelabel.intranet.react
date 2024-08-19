@@ -1,4 +1,5 @@
 import Label from "../label/label";
+import Upload from "../upload/upload";
 import './page.css';
 
 const Page = () => {
@@ -7,6 +8,8 @@ const Page = () => {
             <div className="page__labels">
                 <Label />
             </div>
+
+            <Upload />
         </div>
     );
 };

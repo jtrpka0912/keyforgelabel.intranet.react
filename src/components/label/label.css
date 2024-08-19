@@ -1,4 +1,9 @@
 .label {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+
     /* 67mm X 95.5mm X 22.5mm */
     width: 67mm;
     height: 22.5mm;
@@ -7,15 +12,37 @@
     border: 1px solid #000;
     font-family: Arial, sans-serif;
 
-    .label__name {
-        margin: 0;
-        padding: 0;
-        font-size: 1.0em;
+    .label__left {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 0.5rem;
+        justify-content: center;
+        height: 100%;
+
+        .label__name {
+            margin: 0;
+            padding: 0;
+            font-size: 1.0em;
+        }
+    
+        .label__set {
+            margin: 0;
+            padding: 0;
+            font-size: 0.75em;
+        }
     }
 
-    .label__set {
-        margin: 0;
-        padding: 0;
-        font-size: 0.75em;
+    .label__right {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 0.3rem;
+        justify-content: center;
+        height: 100%;
+
+        /*Temp*/
+        p {
+            margin: 0;
+            padding: 0;
+        }
     }
 }

@@ -1,0 +1,9 @@
+.page {
+    max-width: 11in;
+    height: 8.5in;
+
+    .page__labels {
+        display: flex;
+        flex-flow: row wrap;
+    }
+}

@@ -1,3 +1,5 @@
+import Page from "./components/page/page"
+
 /**
  * @function App
  * @description The root component for the web app
@@ -6,7 +8,9 @@
  */
 function App() {
   return (
-    <div>Hello World</div>
+    <main>
+      <Page />
+    </main>
   )
 }
 

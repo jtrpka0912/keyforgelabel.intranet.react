@@ -1,4 +1,4 @@
-import Label from "./components/label/label"
+import Page from "./components/page/page"
 
 /**
  * @function App
@@ -9,7 +9,7 @@ import Label from "./components/label/label"
 function App() {
   return (
     <main>
-      <Label />
+      <Page />
     </main>
   )
 }

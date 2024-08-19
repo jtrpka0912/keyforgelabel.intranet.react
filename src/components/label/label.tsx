@@ -10,7 +10,7 @@ const Label = () => {
     return (
         <div className="label">
             <div className="label__left">
-                <h2 className="label__name">Jeremy of the grand majestic Flibbles</h2>
+                <h2 className="label__name">Jeremy of the grand flibble</h2>
                 <p className="label__set">Grim Reminders</p>
             </div>
 

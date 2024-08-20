@@ -1,3 +1,4 @@
+import './App.css';
 import Page from "./components/page/page"
 import Upload from "./components/upload/upload"
 
@@ -9,7 +10,7 @@ import Upload from "./components/upload/upload"
  */
 function App() {
   return (
-    <main>
+    <main className="app">
       <Page />
       <Upload />
     </main>

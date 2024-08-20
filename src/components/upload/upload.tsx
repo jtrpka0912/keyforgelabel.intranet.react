@@ -82,7 +82,8 @@ const UploadForm = ({
         }
 
         try {
-            const deck: Deck = await getDeck('a46ee85b-e715-44c8-b6fa-d4e888ab983c');
+            const deckID: string = new URL(url).pathname.split('/')[2];
+            const deck: Deck = await getDeck(deckID);
 
             console.info(deck);
 

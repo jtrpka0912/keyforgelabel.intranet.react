@@ -10,7 +10,7 @@
         box-sizing: border-box;
         width: 5rem;
         height: 5rem;
-        background-color: red;
+        background-color: darkred;
         box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.4);
         border: 0;
         border-radius: 50%;
@@ -34,6 +34,27 @@
             gap: 1rem;
             justify-content: space-around;
             align-items: flex-start;
+        }
+
+        .upload__dialog-buttons {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 0.5rem;
+
+            button {
+                padding: 0.5rem 1.0rem;
+                border: 0;
+            }
+
+            .upload__dialog-cancel-button {
+                background-color: darkred;
+                color: #fff;
+            }
+
+            .upload__dialog-submit-button {
+                background-color: darkgreen;
+                color: #fff;
+            }
         }
     }
 }

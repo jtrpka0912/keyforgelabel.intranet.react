@@ -39,7 +39,10 @@ const UploadDialog = ({isOpen, onClose}: UploadDialogProps) => {
                     required={true} 
                 />
 
-                <button type="reset" onClick={onClose}>Close</button>
+                <div className="upload__dialog-buttons">
+                    <button type="submit" className="upload__dialog-submit-button">Submit</button>
+                    <button type="reset" className="upload__dialog-cancel-button" onClick={onClose}>Close</button>
+                </div>
             </form>
         </dialog>
     );

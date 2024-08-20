@@ -5,6 +5,7 @@ export type InputProps = {
     label: string;
     placeholder: string | undefined;
     required: boolean;
+    isError: boolean;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };

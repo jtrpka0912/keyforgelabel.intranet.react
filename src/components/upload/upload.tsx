@@ -14,6 +14,7 @@ const UploadForm = ({
     onClose
 }: UploadFormProps) => {
     const [url, setUrl] = React.useState('');
+    const [error, setError] = React.useState('');
 
     /**
      * @function handleOnChangeSetUrl
@@ -70,8 +71,12 @@ const UploadForm = ({
      */
     const handleOnSubmitUploadDeck = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setError('');
 
-        console.info(isURLValidForMasterVault(url));
+        if(!isURLValidForMasterVault(url)) {
+            setError('Invalid Master Vault URL');
+            return;
+        }
 
         console.info(url);
     }
@@ -88,10 +93,13 @@ const UploadForm = ({
                 id="url"
                 label="Deck URL"
                 placeholder="Place URL of Master Vault Deck"
-                required={true} 
+                required={true}
+                isError={!!error} 
                 value={url}
                 onChange={handleOnChangeSetUrl}
             />
+
+            { error ? <p className="upload__form-error">{error}</p> : null}
 
             <div className="upload__form-buttons">
                 <button type="submit" className="upload__form-submit-button">Submit</button>

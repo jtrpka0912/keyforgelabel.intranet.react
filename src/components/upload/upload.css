@@ -36,6 +36,14 @@
         justify-content: space-around;
         align-items: flex-start;
 
+        .upload__form-error {
+            margin: 0;
+            padding: 0;
+            color: darkred;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
         .upload__form-buttons {
             display: flex;
             flex-flow: row nowrap;

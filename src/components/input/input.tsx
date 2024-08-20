@@ -8,11 +8,12 @@ const Input = ({
     label,
     placeholder,
     required,
+    isError,
     value,
     onChange
 }: InputProps) => {
     return (
-        <div className="input">
+        <div className={`input ${isError ? 'input--error' : null}`}>
             <label htmlFor={id}>{label} {required ? <span title="Required Field">*</span> : null}</label>
             <input 
                 type={type} 

@@ -4,6 +4,7 @@ import { UploadButtonProps, UploadDialogProps, UploadFormProps } from './upload.
 import Input from '../input/input';
 import { getDeck } from '../../api/keyforge';
 import { Deck } from '../../models/keyforge/deck';
+import { Actions, DecksContext } from '../../state/decks';
 
 /**
  * @function UploadForm
@@ -15,8 +16,10 @@ import { Deck } from '../../models/keyforge/deck';
 const UploadForm = ({
     onClose
 }: UploadFormProps) => {
+    const context = React.useContext(DecksContext);
+    if(!context) return null;
+
     const [url, setUrl] = React.useState('');
-    const [error, setError] = React.useState('');
 
     /**
      * @function handleOnChangeSetUrl
@@ -62,7 +65,6 @@ const UploadForm = ({
      */
     const handleOnResetClearForm = () => {
         setUrl('');
-        setError('');
     }
 
     /**
@@ -75,10 +77,13 @@ const UploadForm = ({
      */
     const handleOnSubmitUploadDeck = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setError('');
+
+        if(!context) return;
+
+        context.dispatch({ type: Actions.RETRIEVE_DECK_PENDING, payload: null });
 
         if(!isURLValidForMasterVault(url)) {
-            setError('Invalid Master Vault URL');
+            context.dispatch({ type: Actions.RETRIEVE_DECK_FAIL, payload: 'Invalid Master Vault URL' })
             return;
         }
 
@@ -87,12 +92,11 @@ const UploadForm = ({
             const deck: Deck = await getDeck(deckID);
 
             console.info(deck);
+            context.dispatch({ type: Actions.RETRIEVE_DECK_SUCCESS, payload: deck });
 
-            setError('');
             setUrl('');
         } catch(e: any) {
-            console.error(e);
-            setError(e);
+            context.dispatch({ type: Actions.RETRIEVE_DECK_FAIL, payload: e })
         }
     }
 
@@ -109,12 +113,12 @@ const UploadForm = ({
                 label="Deck URL"
                 placeholder="Place URL of Master Vault Deck"
                 required={true}
-                isError={!!error} 
+                isError={!!context.state.error} 
                 value={url}
                 onChange={handleOnChangeSetUrl}
             />
 
-            { error ? <p className="upload__form-error">{error}</p> : null}
+            { context.state.error ? <p className="upload__form-error">{context.state.error}</p> : null}
 
             <div className="upload__form-buttons">
                 <button type="submit" className="upload__form-submit-button">Submit</button>

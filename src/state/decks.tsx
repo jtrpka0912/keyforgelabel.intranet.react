@@ -13,6 +13,13 @@ type Action =
     | { type: 'RETRIEVE_DECK_FAIL'; payload: string }
     | { type: 'CLEAR_DECKS'; payload: null }
 
+export enum Actions {
+    RETRIEVE_DECK_PENDING = 'RETRIEVE_DECK_PENDING',
+    RETRIEVE_DECK_SUCCESS = 'RETRIEVE_DECK_SUCCESS',
+    RETRIEVE_DECK_FAIL = 'RETRIEVE_DECK_FAIL',
+    CLEAR_DECKS = 'CLEAR_DECKS'
+}
+
 const initialState: State = {
     isLoading: false,
     decks: [],

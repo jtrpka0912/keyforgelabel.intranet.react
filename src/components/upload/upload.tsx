@@ -1,6 +1,7 @@
 import React from 'react';
 import './upload.css';
 import { UploadButtonProps, UploadDialogProps } from './upload.types';
+import Input from '../input/input';
 
 /**
  * @function UploadDialog
@@ -28,7 +29,14 @@ const UploadDialog = ({isOpen, onClose}: UploadDialogProps) => {
             ref={elementRef} 
             className="upload__dialog"
         >
-            <p>Hello World</p>
+            <Input
+                type="url"
+                name="url"
+                id="url"
+                label="Deck URL"
+                placeholder="Place URL of Master Vault Deck"
+                required={true} 
+            />
             <button onClick={onClose}>Close</button>
         </dialog>
     );

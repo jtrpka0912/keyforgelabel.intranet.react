@@ -29,6 +29,29 @@ const UploadForm = ({
     }
 
     /**
+     * @function isURLValidForMasterVault
+     * @description Check if the URL is valid and a KF master vault url
+     * @author J. Trpka
+     * @param {string} url 
+     * @returns {boolean}
+     */
+    const isURLValidForMasterVault = (url: string) : boolean => {
+        const urlObject: URL = new URL(url);
+
+        if(urlObject.host !== 'www.keyforgegame.com') return false;
+
+        // /deck-details/469b1b46-e2d5-4704-bb6e-08487c6ee188
+        const breakdownPathname: string[] = urlObject.pathname.split('/');
+
+        // Check if it has the proper path
+        if(breakdownPathname[1] !== 'deck-details') return false;
+
+        // Check if it has a proper ID (uuid)
+        const uuidRegex: RegExp = new RegExp(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+        return uuidRegex.test(breakdownPathname[2]);
+    }
+
+    /**
      * @function handleOnResetClearForm
      * @description Clear the form (state)
      * @author J. Trpka
@@ -47,6 +70,8 @@ const UploadForm = ({
      */
     const handleOnSubmitUploadDeck = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        console.info(isURLValidForMasterVault(url));
 
         console.info(url);
     }

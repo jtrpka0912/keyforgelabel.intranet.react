@@ -62,6 +62,7 @@ const UploadForm = ({
      */
     const handleOnResetClearForm = () => {
         setUrl('');
+        setError('');
     }
 
     /**

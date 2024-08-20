@@ -1,7 +1,127 @@
 import React from 'react';
 import './upload.css';
-import { UploadButtonProps, UploadDialogProps } from './upload.types';
+import { UploadButtonProps, UploadDialogProps, UploadFormProps } from './upload.types';
 import Input from '../input/input';
+import { getDeck } from '../../api/keyforge';
+import { Deck } from '../../models/keyforge/deck';
+
+/**
+ * @function UploadForm
+ * @description Upload a deck using this simple form
+ * @author J. Trpka
+ * @param {function} onClose
+ * @returns {JSX.Element}
+ */
+const UploadForm = ({
+    onClose
+}: UploadFormProps) => {
+    const [url, setUrl] = React.useState('');
+    const [error, setError] = React.useState('');
+
+    /**
+     * @function handleOnChangeSetUrl
+     * @description Set the URL value to local state
+     * @author J. Trpka
+     * @param {React.ChangeEvent<HTMLInputElement>} e 
+     * @returns {void}
+     */
+    const handleOnChangeSetUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value: string = e.target.value;
+
+        setUrl(value);
+    }
+
+    /**
+     * @function isURLValidForMasterVault
+     * @description Check if the URL is valid and a KF master vault url
+     * @author J. Trpka
+     * @param {string} url 
+     * @returns {boolean}
+     */
+    const isURLValidForMasterVault = (url: string) : boolean => {
+        const urlObject: URL = new URL(url);
+
+        if(urlObject.host !== 'www.keyforgegame.com') return false;
+
+        // /deck-details/469b1b46-e2d5-4704-bb6e-08487c6ee188
+        const breakdownPathname: string[] = urlObject.pathname.split('/');
+
+        // Check if it has the proper path
+        if(breakdownPathname[1] !== 'deck-details') return false;
+
+        // Check if it has a proper ID (uuid)
+        const uuidRegex: RegExp = new RegExp(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+        return uuidRegex.test(breakdownPathname[2]);
+    }
+
+    /**
+     * @function handleOnResetClearForm
+     * @description Clear the form (state)
+     * @author J. Trpka
+     * @returns {void}
+     */
+    const handleOnResetClearForm = () => {
+        setUrl('');
+    }
+
+    /**
+     * @async
+     * @function handleOnSubmitUploadDeck
+     * @description Validate and request data from the API
+     * @author J. Trpka
+     * @param {React.FormEvent<HTMLFormElement>} e 
+     * @returns {void}
+     */
+    const handleOnSubmitUploadDeck = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError('');
+
+        if(!isURLValidForMasterVault(url)) {
+            setError('Invalid Master Vault URL');
+            return;
+        }
+
+        try {
+            const deckID: string = new URL(url).pathname.split('/')[2];
+            const deck: Deck = await getDeck(deckID);
+
+            console.info(deck);
+
+            setError('');
+            setUrl('');
+        } catch(e: any) {
+            console.error(e);
+            setError(e);
+        }
+    }
+
+    return (
+        <form
+            className="upload__form" 
+            onSubmit={(e) => handleOnSubmitUploadDeck(e)}
+            onReset={handleOnResetClearForm}
+        >
+            <Input
+                type="url"
+                name="url"
+                id="url"
+                label="Deck URL"
+                placeholder="Place URL of Master Vault Deck"
+                required={true}
+                isError={!!error} 
+                value={url}
+                onChange={handleOnChangeSetUrl}
+            />
+
+            { error ? <p className="upload__form-error">{error}</p> : null}
+
+            <div className="upload__form-buttons">
+                <button type="submit" className="upload__form-submit-button">Submit</button>
+                <button type="reset" className="upload__form-cancel-button" onClick={onClose}>Close</button>
+            </div>
+        </form>
+    );
+};
 
 /**
  * @function UploadDialog
@@ -29,21 +149,7 @@ const UploadDialog = ({isOpen, onClose}: UploadDialogProps) => {
             ref={elementRef} 
             className="upload__dialog"
         >
-            <form>
-                <Input
-                    type="url"
-                    name="url"
-                    id="url"
-                    label="Deck URL"
-                    placeholder="Place URL of Master Vault Deck"
-                    required={true} 
-                />
-
-                <div className="upload__dialog-buttons">
-                    <button type="submit" className="upload__dialog-submit-button">Submit</button>
-                    <button type="reset" className="upload__dialog-cancel-button" onClick={onClose}>Close</button>
-                </div>
-            </form>
+            <UploadForm onClose={onClose} />
         </dialog>
     );
 };

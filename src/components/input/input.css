@@ -19,4 +19,14 @@
         padding: 0.25rem;
         font-size: 0.9em;
     }
+
+    &.input--error {
+        label {
+            color: darkred;
+        }
+
+        input {
+            border: 2px solid darkred;
+        }
+    }
 }

@@ -7,10 +7,13 @@ const Input = ({
     name,
     label,
     placeholder,
-    required
+    required,
+    isError,
+    value,
+    onChange
 }: InputProps) => {
     return (
-        <div className="input">
+        <div className={`input ${isError ? 'input--error' : null}`}>
             <label htmlFor={id}>{label} {required ? <span title="Required Field">*</span> : null}</label>
             <input 
                 type={type} 
@@ -20,6 +23,8 @@ const Input = ({
                 aria-placeholder={placeholder}
                 required={required ? true : undefined}
                 aria-required={required ? true : undefined}
+                value={value}
+                onChange={onChange}
             />
         </div>
     );

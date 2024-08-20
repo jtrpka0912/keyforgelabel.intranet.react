@@ -6,3 +6,7 @@ export type UploadDialogProps = {
 export type UploadButtonProps = {
     onClick: () => void;
 };
+
+export type UploadFormProps = {
+    onClose: () => void;
+}

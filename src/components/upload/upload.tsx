@@ -29,15 +29,18 @@ const UploadDialog = ({isOpen, onClose}: UploadDialogProps) => {
             ref={elementRef} 
             className="upload__dialog"
         >
-            <Input
-                type="url"
-                name="url"
-                id="url"
-                label="Deck URL"
-                placeholder="Place URL of Master Vault Deck"
-                required={true} 
-            />
-            <button onClick={onClose}>Close</button>
+            <form>
+                <Input
+                    type="url"
+                    name="url"
+                    id="url"
+                    label="Deck URL"
+                    placeholder="Place URL of Master Vault Deck"
+                    required={true} 
+                />
+
+                <button type="reset" onClick={onClose}>Close</button>
+            </form>
         </dialog>
     );
 };

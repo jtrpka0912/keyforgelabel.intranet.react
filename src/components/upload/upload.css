@@ -27,5 +27,13 @@
         box-sizing: border-box;
         margin: auto;
         box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.4);
+
+        form {
+            display: flex;
+            flex-flow: column nowrap;
+            gap: 1rem;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
     }
 }

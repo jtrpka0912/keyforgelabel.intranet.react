@@ -1,6 +1,7 @@
 import './App.css';
 import Page from "./components/page/page"
 import Upload from "./components/upload/upload"
+import DecksProvider from './state/decks';
 
 /**
  * @function App
@@ -11,8 +12,10 @@ import Upload from "./components/upload/upload"
 function App() {
   return (
     <main className="app">
-      <Page />
-      <Upload />
+      <DecksProvider>
+        <Page />
+        <Upload />
+      </DecksProvider>
     </main>
   )
 }

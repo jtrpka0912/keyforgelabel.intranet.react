@@ -13,21 +13,49 @@ import Input from '../input/input';
 const UploadForm = ({
     onClose
 }: UploadFormProps) => {
+    const [url, setUrl] = React.useState('');
+
+    /**
+     * @function handleOnChangeSetUrl
+     * @description Set the URL value to local state
+     * @author J. Trpka
+     * @param {React.ChangeEvent<HTMLInputElement>} e 
+     * @returns {void}
+     */
+    const handleOnChangeSetUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value: string = e.target.value;
+
+        setUrl(value);
+    }
+
+    /**
+     * @function handleOnResetClearForm
+     * @description Clear the form (state)
+     * @author J. Trpka
+     * @returns {void}
+     */
+    const handleOnResetClearForm = () => {
+        setUrl('');
+    }
+
     /**
      * @function handleOnSubmitUploadDeck
      * @description Validate and request data from the API
      * @author J. Trpka
      * @param {React.FormEvent<HTMLFormElement>} e 
-     * @returns void
+     * @returns {void}
      */
     const handleOnSubmitUploadDeck = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        console.info(url);
     }
 
     return (
         <form
             className="upload__form" 
             onSubmit={(e) => handleOnSubmitUploadDeck(e)}
+            onReset={handleOnResetClearForm}
         >
             <Input
                 type="url"
@@ -36,6 +64,8 @@ const UploadForm = ({
                 label="Deck URL"
                 placeholder="Place URL of Master Vault Deck"
                 required={true} 
+                value={url}
+                onChange={handleOnChangeSetUrl}
             />
 
             <div className="upload__form-buttons">

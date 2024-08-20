@@ -7,7 +7,9 @@ const Input = ({
     name,
     label,
     placeholder,
-    required
+    required,
+    value,
+    onChange
 }: InputProps) => {
     return (
         <div className="input">
@@ -20,6 +22,8 @@ const Input = ({
                 aria-placeholder={placeholder}
                 required={required ? true : undefined}
                 aria-required={required ? true : undefined}
+                value={value}
+                onChange={onChange}
             />
         </div>
     );

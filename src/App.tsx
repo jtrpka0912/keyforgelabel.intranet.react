@@ -1,4 +1,5 @@
 import Page from "./components/page/page"
+import Upload from "./components/upload/upload"
 
 /**
  * @function App
@@ -10,6 +11,7 @@ function App() {
   return (
     <main>
       <Page />
+      <Upload />
     </main>
   )
 }

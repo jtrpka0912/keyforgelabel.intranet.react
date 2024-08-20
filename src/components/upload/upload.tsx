@@ -2,6 +2,8 @@ import React from 'react';
 import './upload.css';
 import { UploadButtonProps, UploadDialogProps, UploadFormProps } from './upload.types';
 import Input from '../input/input';
+import { getDeck } from '../../api/keyforge';
+import { Deck } from '../../models/keyforge/deck';
 
 /**
  * @function UploadForm
@@ -63,13 +65,14 @@ const UploadForm = ({
     }
 
     /**
+     * @async
      * @function handleOnSubmitUploadDeck
      * @description Validate and request data from the API
      * @author J. Trpka
      * @param {React.FormEvent<HTMLFormElement>} e 
      * @returns {void}
      */
-    const handleOnSubmitUploadDeck = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleOnSubmitUploadDeck = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError('');
 
@@ -78,7 +81,17 @@ const UploadForm = ({
             return;
         }
 
-        console.info(url);
+        try {
+            const deck: Deck = await getDeck('a46ee85b-e715-44c8-b6fa-d4e888ab983c');
+
+            console.info(deck);
+
+            setError('');
+            setUrl('');
+        } catch(e: any) {
+            console.error(e);
+            setError(e);
+        }
     }
 
     return (

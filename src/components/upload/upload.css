@@ -1,0 +1,60 @@
+.upload {
+    .upload__button {
+        cursor: pointer;
+        
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+        z-index: 10;
+    
+        box-sizing: border-box;
+        width: 5rem;
+        height: 5rem;
+        background-color: darkred;
+        box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.4);
+        border: 0;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 1.1em;
+    }
+
+    .upload__dialog {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 100;
+
+        width: 33%;
+        box-sizing: border-box;
+        margin: auto;
+        box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.4);
+
+        form {
+            display: flex;
+            flex-flow: column nowrap;
+            gap: 1rem;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
+        .upload__dialog-buttons {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 0.5rem;
+
+            button {
+                padding: 0.5rem 1.0rem;
+                border: 0;
+            }
+
+            .upload__dialog-cancel-button {
+                background-color: darkred;
+                color: #fff;
+            }
+
+            .upload__dialog-submit-button {
+                background-color: darkgreen;
+                color: #fff;
+            }
+        }
+    }
+}

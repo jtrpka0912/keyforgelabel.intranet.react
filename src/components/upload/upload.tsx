@@ -1,7 +1,50 @@
 import React from 'react';
 import './upload.css';
-import { UploadButtonProps, UploadDialogProps } from './upload.types';
+import { UploadButtonProps, UploadDialogProps, UploadFormProps } from './upload.types';
 import Input from '../input/input';
+
+/**
+ * @function UploadForm
+ * @description Upload a deck using this simple form
+ * @author J. Trpka
+ * @param {function} onClose
+ * @returns {JSX.Element}
+ */
+const UploadForm = ({
+    onClose
+}: UploadFormProps) => {
+    /**
+     * @function handleOnSubmitUploadDeck
+     * @description Validate and request data from the API
+     * @author J. Trpka
+     * @param {React.FormEvent<HTMLFormElement>} e 
+     * @returns void
+     */
+    const handleOnSubmitUploadDeck = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+    }
+
+    return (
+        <form
+            className="upload__form" 
+            onSubmit={(e) => handleOnSubmitUploadDeck(e)}
+        >
+            <Input
+                type="url"
+                name="url"
+                id="url"
+                label="Deck URL"
+                placeholder="Place URL of Master Vault Deck"
+                required={true} 
+            />
+
+            <div className="upload__form-buttons">
+                <button type="submit" className="upload__form-submit-button">Submit</button>
+                <button type="reset" className="upload__form-cancel-button" onClick={onClose}>Close</button>
+            </div>
+        </form>
+    );
+};
 
 /**
  * @function UploadDialog
@@ -29,21 +72,7 @@ const UploadDialog = ({isOpen, onClose}: UploadDialogProps) => {
             ref={elementRef} 
             className="upload__dialog"
         >
-            <form>
-                <Input
-                    type="url"
-                    name="url"
-                    id="url"
-                    label="Deck URL"
-                    placeholder="Place URL of Master Vault Deck"
-                    required={true} 
-                />
-
-                <div className="upload__dialog-buttons">
-                    <button type="submit" className="upload__dialog-submit-button">Submit</button>
-                    <button type="reset" className="upload__dialog-cancel-button" onClick={onClose}>Close</button>
-                </div>
-            </form>
+            <UploadForm onClose={onClose} />
         </dialog>
     );
 };

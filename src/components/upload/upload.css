@@ -27,16 +27,16 @@
         box-sizing: border-box;
         margin: auto;
         box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.4);
+    }
 
-        form {
-            display: flex;
-            flex-flow: column nowrap;
-            gap: 1rem;
-            justify-content: space-around;
-            align-items: flex-start;
-        }
+    .upload__form {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 1rem;
+        justify-content: space-around;
+        align-items: flex-start;
 
-        .upload__dialog-buttons {
+        .upload__form-buttons {
             display: flex;
             flex-flow: row nowrap;
             gap: 0.5rem;
@@ -46,12 +46,12 @@
                 border: 0;
             }
 
-            .upload__dialog-cancel-button {
+            .upload__form-cancel-button {
                 background-color: darkred;
                 color: #fff;
             }
 
-            .upload__dialog-submit-button {
+            .upload__form-submit-button {
                 background-color: darkgreen;
                 color: #fff;
             }

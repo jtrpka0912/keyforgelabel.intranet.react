@@ -9,7 +9,7 @@ import { UploadButtonProps, UploadDialogProps } from './upload.types';
  * @param {boolean} isOpen
  * @returns {JSX.Element}
  */
-const UploadDialog = ({isOpen}: UploadDialogProps) => {
+const UploadDialog = ({isOpen, onClose}: UploadDialogProps) => {
     const elementRef = React.useRef<HTMLDialogElement>(null);
 
     React.useEffect(() => {
@@ -26,8 +26,10 @@ const UploadDialog = ({isOpen}: UploadDialogProps) => {
     return (
         <dialog 
             ref={elementRef} 
-            className="upload__dialog">
+            className="upload__dialog"
+        >
             <p>Hello World</p>
+            <button onClick={onClose}>Close</button>
         </dialog>
     );
 };
@@ -57,14 +59,30 @@ const UploadButton = ({onClick}: UploadButtonProps) => {
 const Upload = () => {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
+    /**
+     * @function handleOnClickOpenModal
+     * @description Open the upload modal
+     * @author J. Trpka
+     * @returns {void}
+     */
     const handleOnClickOpenModal = () => {
         setIsOpen(true);
+    }
+
+    /**
+     * @function handleOnClickCloseModal
+     * @description Close the upload modal
+     * @author J. Trpka
+     * @returns {void}
+     */
+    const handleOnClickCloseModal = () => {
+        setIsOpen(false);
     }
 
     return (
         <div className="upload">
             <UploadButton onClick={handleOnClickOpenModal} />
-            <UploadDialog isOpen={isOpen} />
+            <UploadDialog isOpen={isOpen} onClose={handleOnClickCloseModal} />
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { UploadButtonProps, UploadDialogProps, UploadFormProps } from './upload.
 import Input from '../input/input';
 import { getDeck } from '../../api/keyforge';
 import { Deck } from '../../models/keyforge/deck';
+import { Actions, DecksContext } from '../../state/decks';
 
 /**
  * @function UploadForm
@@ -15,8 +16,10 @@ import { Deck } from '../../models/keyforge/deck';
 const UploadForm = ({
     onClose
 }: UploadFormProps) => {
+    const context = React.useContext(DecksContext);
+    if(!context) return null;
+
     const [url, setUrl] = React.useState('');
-    const [error, setError] = React.useState('');
 
     /**
      * @function handleOnChangeSetUrl
@@ -62,7 +65,6 @@ const UploadForm = ({
      */
     const handleOnResetClearForm = () => {
         setUrl('');
-        setError('');
     }
 
     /**
@@ -75,10 +77,13 @@ const UploadForm = ({
      */
     const handleOnSubmitUploadDeck = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setError('');
+
+        if(!context) return;
+
+        context.dispatch({ type: Actions.RETRIEVE_DECK_PENDING, payload: null });
 
         if(!isURLValidForMasterVault(url)) {
-            setError('Invalid Master Vault URL');
+            context.dispatch({ type: Actions.RETRIEVE_DECK_FAIL, payload: 'Invalid Master Vault URL' })
             return;
         }
 
@@ -86,13 +91,30 @@ const UploadForm = ({
             const deckID: string = new URL(url).pathname.split('/')[2];
             const deck: Deck = await getDeck(deckID);
 
-            console.info(deck);
+            // Check if the deck is not in storage
+            if(context.state.decks.findIndex((deck: Deck) => deck.data.id === deckID) === -1) {
+                // Store the deck in store management
+                context.dispatch({ type: Actions.RETRIEVE_DECK_SUCCESS, payload: deck });
 
-            setError('');
-            setUrl('');
+                // Store the deck in local storage
+                let decksStorageString: string | null = localStorage.getItem('decks');
+                if(!decksStorageString) decksStorageString = '[]'; // If null, then make an empty array string
+
+                const decksStorageArray: string[] = JSON.parse(decksStorageString);
+
+                // Check if the deck ID is not in local storage
+                if(decksStorageArray.findIndex((storedDeckID: string) => storedDeckID === deckID ) === -1) decksStorageArray.push(deckID);
+
+                decksStorageString = JSON.stringify(decksStorageArray);
+                localStorage.setItem('decks', decksStorageString);
+            } else {
+                throw new Error('Deck already set');
+            }
         } catch(e: any) {
-            console.error(e);
-            setError(e);
+            context.dispatch({ type: Actions.RETRIEVE_DECK_FAIL, payload: e.message })
+        } finally {
+            // Reset the form
+            setUrl('');
         }
     }
 
@@ -109,12 +131,12 @@ const UploadForm = ({
                 label="Deck URL"
                 placeholder="Place URL of Master Vault Deck"
                 required={true}
-                isError={!!error} 
+                isError={!!context.state.error} 
                 value={url}
                 onChange={handleOnChangeSetUrl}
             />
 
-            { error ? <p className="upload__form-error">{error}</p> : null}
+            { context.state.error ? <p className="upload__form-error">{context.state.error}</p> : null}
 
             <div className="upload__form-buttons">
                 <button type="submit" className="upload__form-submit-button">Submit</button>

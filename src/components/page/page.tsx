@@ -3,9 +3,11 @@ import Label from "../label/label";
 import './page.css';
 import { Actions, DecksContext } from "../../state/decks";
 import { getDeck } from "../../api/keyforge";
+import { Deck } from "../../models/keyforge/deck";
 
 const Page = () => {
     const decksContext = React.useContext(DecksContext);
+    if(!decksContext) return null;
 
     React.useEffect(() => {
         if(!decksContext) return;
@@ -32,12 +34,16 @@ const Page = () => {
                 });
             }
         }
-    }, [decksContext?.state.decks]);
+    }, [decksContext.state.decks]);
 
     return (
         <div className="page">
             <div className="page__labels">
-                <Label />
+                { decksContext.state.decks.map((deck: Deck) => {
+                    return (
+                        <Label key={deck.data.id} deck={deck} />
+                    );
+                }) }
             </div>
         </div>
     );

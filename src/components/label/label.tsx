@@ -1,4 +1,5 @@
 import './label.css';
+import LabelProps from './label.types';
 
 /**
  * @function Label
@@ -6,18 +7,20 @@ import './label.css';
  * @author J. Trpka
  * @returns {JSX.Element}
  */
-const Label = () => {
+const Label = ({
+    deck
+}: LabelProps) => {
     return (
         <div className="label">
             <div className="label__left">
-                <h2 className="label__name">Jeremy of the grand flibble</h2>
-                <p className="label__set">Grim Reminders</p>
+                <h2 className="label__name">{deck.data.name}</h2>
+                <p className="label__set">{deck.data.expansion}</p>
             </div>
 
             <div className="label__right">
-                <img src="https://placehold.co/100x100" alt="Placeholder" />
-                <img src="https://placehold.co/100x100" alt="Placeholder" />
-                <img src="https://placehold.co/100x100" alt="Placeholder" />
+                <img src={deck._linked.houses[0].image} alt={`${deck._linked.houses[0].name} Insignia`} />
+                <img src={deck._linked.houses[1].image} alt={`${deck._linked.houses[1].name} Insignia`} />
+                <img src={deck._linked.houses[2].image} alt={`${deck._linked.houses[2].name} Insignia`} />
             </div>
         </div>
     );

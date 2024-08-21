@@ -91,12 +91,30 @@ const UploadForm = ({
             const deckID: string = new URL(url).pathname.split('/')[2];
             const deck: Deck = await getDeck(deckID);
 
-            console.info(deck);
-            context.dispatch({ type: Actions.RETRIEVE_DECK_SUCCESS, payload: deck });
+            // Check if the deck is not in storage
+            if(context.state.decks.findIndex((deck: Deck) => deck.data.id === deckID) === -1) {
+                // Store the deck in store management
+                context.dispatch({ type: Actions.RETRIEVE_DECK_SUCCESS, payload: deck });
 
-            setUrl('');
+                // Store the deck in local storage
+                let decksStorageString: string | null = localStorage.getItem('decks');
+                if(!decksStorageString) decksStorageString = '[]'; // If null, then make an empty array string
+
+                const decksStorageArray: string[] = JSON.parse(decksStorageString);
+
+                // Check if the deck ID is not in local storage
+                if(decksStorageArray.findIndex((storedDeckID: string) => storedDeckID === deckID ) === -1) decksStorageArray.push(deckID);
+
+                decksStorageString = JSON.stringify(decksStorageArray);
+                localStorage.setItem('decks', decksStorageString);
+            } else {
+                throw new Error('Deck already set');
+            }
         } catch(e: any) {
-            context.dispatch({ type: Actions.RETRIEVE_DECK_FAIL, payload: e })
+            context.dispatch({ type: Actions.RETRIEVE_DECK_FAIL, payload: e.message })
+        } finally {
+            // Reset the form
+            setUrl('');
         }
     }
 

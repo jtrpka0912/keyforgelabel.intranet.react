@@ -1,40 +1,12 @@
 import React from "react";
 import Label from "../label/label";
 import './page.css';
-import { Actions, DecksContext } from "../../state/decks";
-import { getDeck } from "../../api/keyforge";
+import { DecksContext } from "../../state/decks";
 import { Deck } from "../../models/keyforge/deck";
 
 const Page = () => {
     const decksContext = React.useContext(DecksContext);
     if(!decksContext) return null;
-
-    React.useEffect(() => {
-        if(!decksContext) return;
-
-        // If no decks in state then check local storage
-        if(decksContext.state.decks.length === 0) {
-            const localStorageString = localStorage.getItem('decks');
-
-            if(!localStorageString) return;
-
-            const localStorageArray: string[] = JSON.parse(localStorageString);
-
-            for(const deckID of localStorageArray) {
-                getDeck(deckID).then((deck) => {
-                    decksContext.dispatch({
-                        type: Actions.RETRIEVE_DECK_SUCCESS,
-                        payload: deck
-                    });
-                }).catch((e) => {
-                    decksContext.dispatch({
-                        type: Actions.RETRIEVE_DECK_FAIL,
-                        payload: e.getMessage()
-                    });
-                });
-            }
-        }
-    }, [decksContext.state.decks]);
 
     return (
         <div className="page">

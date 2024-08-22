@@ -7,18 +7,22 @@ interface State {
     error: string;
 }
 
-type Action = 
-    | { type: 'RETRIEVE_DECK_PENDING'; payload: null }
-    | { type: 'RETRIEVE_DECK_SUCCESS'; payload: Deck }
-    | { type: 'RETRIEVE_DECK_FAIL'; payload: string }
-    | { type: 'CLEAR_DECKS'; payload: null }
-
 export enum Actions {
     RETRIEVE_DECK_PENDING = 'RETRIEVE_DECK_PENDING',
     RETRIEVE_DECK_SUCCESS = 'RETRIEVE_DECK_SUCCESS',
     RETRIEVE_DECK_FAIL = 'RETRIEVE_DECK_FAIL',
+    RELOAD_DECKS = 'RELOAD_DECKS',
     CLEAR_DECKS = 'CLEAR_DECKS'
 }
+
+type Action = 
+    | { type: Actions.RETRIEVE_DECK_PENDING; payload: null }
+    | { type: Actions.RETRIEVE_DECK_SUCCESS; payload: Deck }
+    | { type: Actions.RETRIEVE_DECK_FAIL; payload: string }
+    | { type: Actions.RELOAD_DECKS; payload: Deck[] }
+    | { type: Actions.CLEAR_DECKS; payload: null }
+
+
 
 const initialState: State = {
     isLoading: false,
@@ -34,26 +38,31 @@ const initialState: State = {
  */
 const reducer = (state: State, action: Action): State => {
     switch(action.type) {
-        case 'RETRIEVE_DECK_PENDING':
+        case Actions.RETRIEVE_DECK_PENDING:
             return {
                 ...state,
                 isLoading: true,
                 error: ''
             };
-        case 'RETRIEVE_DECK_SUCCESS':
+        case Actions.RETRIEVE_DECK_SUCCESS:
             return {
                 ...state,
                 decks: [...state.decks, action.payload],
                 isLoading: false,
                 error: ''
             };
-        case 'RETRIEVE_DECK_FAIL':
+        case Actions.RETRIEVE_DECK_FAIL:
             return {
                 ...state,
                 isLoading: false,
                 error: action.payload
             };
-        case 'CLEAR_DECKS':
+        case Actions.RELOAD_DECKS:
+            return {
+                ...state,
+                decks: action.payload
+            }
+        case Actions.CLEAR_DECKS:
             return {
                 ...state,
                 decks: []

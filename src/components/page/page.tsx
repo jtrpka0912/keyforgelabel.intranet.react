@@ -19,15 +19,17 @@ const Page = () => {
 
         if(decksStorageString) {
             const decksStorageArray: string[] = JSON.parse(decksStorageString);
+            const decksArray: Deck[] = [];
 
             decksStorageArray.forEach((deckString) => {
                 const deck = new Deck(deckString);
 
                 if(decksContext.state.decks.findIndex((deckState) => deckState.id === deck.id) === -1) {
-                    // TODO: Should make this a new type of action
-                    decksContext.dispatch({ type: Actions.RETRIEVE_DECK_SUCCESS, payload: new Deck(deckString)})
+                    decksArray.push(deck);
                 }
             });
+
+            decksContext.dispatch({ type: Actions.RELOAD_DECKS, payload: decksArray });
         } // otherwise its empty
     }, []);
 

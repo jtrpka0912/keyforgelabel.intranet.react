@@ -5,6 +5,7 @@ import Input from '../input/input';
 import { getDeck } from '../../api/keyforge';
 import { DeckResponse } from '../../models/keyforge/deck-response';
 import { Actions, DecksContext } from '../../state/decks';
+import { Deck } from '../../entities/keyforge/deck';
 
 /**
  * @function UploadForm
@@ -89,21 +90,23 @@ const UploadForm = ({
 
         try {
             const deckID: string = new URL(url).pathname.split('/')[2];
-            const deck: DeckResponse = await getDeck(deckID);
+            const deckResponse: DeckResponse = await getDeck(deckID);
 
-            // Check if the deck is not in storage
-            if(context.state.decks.findIndex((deck: DeckResponse) => deck.data.id === deckID) === -1) {
-                // Store the deck in store management
+            // Check if the deck is not in store management
+            if(context.state.decks.findIndex((deck: Deck) => deck.id === deckID) === -1) {
+                // Store Management
+                const deck: Deck = new Deck(deckResponse);
                 context.dispatch({ type: Actions.RETRIEVE_DECK_SUCCESS, payload: deck });
 
-                // Store the deck in local storage
+                // Local Storage
                 let decksStorageString: string | null = localStorage.getItem('decks');
                 if(!decksStorageString) decksStorageString = '[]'; // If null, then make an empty array string
-
                 const decksStorageArray: string[] = JSON.parse(decksStorageString);
 
-                // Check if the deck ID is not in local storage
-                if(decksStorageArray.findIndex((storedDeckID: string) => storedDeckID === deckID ) === -1) decksStorageArray.push(deckID);
+                if(decksStorageArray
+                    .findIndex((deckJSON: string) => new Deck(deckJSON).id === deck.id) === -1) {
+                    decksStorageArray.push(deck.toJSONString());
+                }
 
                 decksStorageString = JSON.stringify(decksStorageArray);
                 localStorage.setItem('decks', decksStorageString);

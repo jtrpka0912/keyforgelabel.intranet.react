@@ -81,7 +81,7 @@ const UploadForm = ({
 
         if(!context) return;
 
-        context.dispatch({ type: Actions.RETRIEVE_DECK_PENDING, payload: null });
+        context.dispatch({ type: Actions.RETRIEVE_DECK_PENDING });
 
         if(!isURLValidForMasterVault(url)) {
             context.dispatch({ type: Actions.RETRIEVE_DECK_FAIL, payload: 'Invalid Master Vault URL' })

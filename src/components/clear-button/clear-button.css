@@ -1,0 +1,18 @@
+.clear-button {
+    cursor: pointer;
+    
+    position: fixed;
+    left: 1rem; 
+    bottom: 1rem;
+    z-index: 10;
+
+    box-sizing: border-box;
+    width: 5rem;
+    height: 5rem;
+    background-color: darkred;
+    box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.4);
+    border: 0;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.1em;
+}

@@ -16,11 +16,11 @@ export enum Actions {
 }
 
 type Action = 
-    | { type: Actions.RETRIEVE_DECK_PENDING; payload: null }
+    | { type: Actions.RETRIEVE_DECK_PENDING; }
     | { type: Actions.RETRIEVE_DECK_SUCCESS; payload: Deck }
     | { type: Actions.RETRIEVE_DECK_FAIL; payload: string }
     | { type: Actions.RELOAD_DECKS; payload: Deck[] }
-    | { type: Actions.CLEAR_DECKS; payload: null }
+    | { type: Actions.CLEAR_DECKS; }
 
 
 

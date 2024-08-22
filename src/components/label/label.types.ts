@@ -1,4 +1,4 @@
-import { Deck } from "../../models/keyforge/deck"
+import { Deck } from "../../entities/keyforge/deck";
 
 type LabelProps = {
     deck: Deck;

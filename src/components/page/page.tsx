@@ -2,46 +2,43 @@ import React from "react";
 import Label from "../label/label";
 import './page.css';
 import { Actions, DecksContext } from "../../state/decks";
-import { getDeck } from "../../api/keyforge";
-import { Deck } from "../../models/keyforge/deck";
+import { Deck } from "../../entities/keyforge/deck";
 
+/**
+ * @function Page
+ * @description The sheet page of labels
+ * @author J. Trpka
+ * @returns {JSX.Element}
+ */
 const Page = () => {
     const decksContext = React.useContext(DecksContext);
     if(!decksContext) return null;
 
     React.useEffect(() => {
-        if(!decksContext) return;
+        const decksStorageString = localStorage.getItem('decks');
 
-        // If no decks in state then check local storage
-        if(decksContext.state.decks.length === 0) {
-            const localStorageString = localStorage.getItem('decks');
+        if(decksStorageString) {
+            const decksStorageArray: string[] = JSON.parse(decksStorageString);
+            const decksArray: Deck[] = [];
 
-            if(!localStorageString) return;
+            decksStorageArray.forEach((deckString) => {
+                const deck = new Deck(deckString);
 
-            const localStorageArray: string[] = JSON.parse(localStorageString);
+                if(decksContext.state.decks.findIndex((deckState) => deckState.id === deck.id) === -1) {
+                    decksArray.push(deck);
+                }
+            });
 
-            for(const deckID of localStorageArray) {
-                getDeck(deckID).then((deck) => {
-                    decksContext.dispatch({
-                        type: Actions.RETRIEVE_DECK_SUCCESS,
-                        payload: deck
-                    });
-                }).catch((e) => {
-                    decksContext.dispatch({
-                        type: Actions.RETRIEVE_DECK_FAIL,
-                        payload: e.getMessage()
-                    });
-                });
-            }
-        }
-    }, [decksContext.state.decks]);
+            decksContext.dispatch({ type: Actions.RELOAD_DECKS, payload: decksArray });
+        } // otherwise its empty
+    }, []);
 
     return (
         <div className="page">
             <div className="page__labels">
                 { decksContext.state.decks.map((deck: Deck) => {
                     return (
-                        <Label key={deck.data.id} deck={deck} />
+                        <Label key={deck.id} deck={deck} />
                     );
                 }) }
             </div>

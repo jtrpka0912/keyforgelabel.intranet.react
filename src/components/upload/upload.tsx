@@ -3,7 +3,7 @@ import './upload.css';
 import { UploadButtonProps, UploadDialogProps, UploadFormProps } from './upload.types';
 import Input from '../input/input';
 import { getDeck } from '../../api/keyforge';
-import { Deck } from '../../models/keyforge/deck';
+import { DeckResponse } from '../../models/keyforge/deck';
 import { Actions, DecksContext } from '../../state/decks';
 
 /**
@@ -89,10 +89,10 @@ const UploadForm = ({
 
         try {
             const deckID: string = new URL(url).pathname.split('/')[2];
-            const deck: Deck = await getDeck(deckID);
+            const deck: DeckResponse = await getDeck(deckID);
 
             // Check if the deck is not in storage
-            if(context.state.decks.findIndex((deck: Deck) => deck.data.id === deckID) === -1) {
+            if(context.state.decks.findIndex((deck: DeckResponse) => deck.data.id === deckID) === -1) {
                 // Store the deck in store management
                 context.dispatch({ type: Actions.RETRIEVE_DECK_SUCCESS, payload: deck });
 

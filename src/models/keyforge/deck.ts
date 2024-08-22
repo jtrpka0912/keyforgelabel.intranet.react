@@ -13,7 +13,7 @@ export enum Expansions {
     // TODO: Add the new ones
 }
 
-export type Deck = {
+export type DeckResponse = {
     data: DeckData;
     _linked: DeckLinked;
 };

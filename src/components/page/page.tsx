@@ -2,7 +2,7 @@ import React from "react";
 import Label from "../label/label";
 import './page.css';
 import { DecksContext } from "../../state/decks";
-import { Deck } from "../../models/keyforge/deck";
+import { DeckResponse } from "../../models/keyforge/deck";
 
 const Page = () => {
     const decksContext = React.useContext(DecksContext);
@@ -11,7 +11,7 @@ const Page = () => {
     return (
         <div className="page">
             <div className="page__labels">
-                { decksContext.state.decks.map((deck: Deck) => {
+                { decksContext.state.decks.map((deck: DeckResponse) => {
                     return (
                         <Label key={deck.data.id} deck={deck} />
                     );

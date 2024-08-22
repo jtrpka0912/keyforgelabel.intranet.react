@@ -92,6 +92,8 @@ const UploadForm = ({
             const deckID: string = new URL(url).pathname.split('/')[2];
             const deckResponse: DeckResponse = await getDeck(deckID);
 
+            if(context.state.decks.length >= context.state.maxDecks) throw new Error(`You can only have ${context.state.maxDecks} decks on a sheet`);
+
             // Check if the deck is not in store management
             if(context.state.decks.findIndex((deck: Deck) => deck.id === deckID) === -1) {
                 // Store Management
@@ -142,7 +144,14 @@ const UploadForm = ({
             { context.state.error ? <p className="upload__form-error">{context.state.error}</p> : null}
 
             <div className="upload__form-buttons">
-                <button type="submit" className="upload__form-submit-button">Submit</button>
+                <button 
+                    type="submit" 
+                    className="upload__form-submit-button" 
+                    title={context.state.decks.length >= context.state.maxDecks ? `You can only have ${context.state.maxDecks} decks per sheet.` : undefined}
+                    disabled={context.state.decks.length >= context.state.maxDecks ? true : undefined} 
+                    aria-disabled={context.state.decks.length >= context.state.maxDecks ? true : undefined}
+                >Submit</button>
+                
                 <button type="reset" className="upload__form-cancel-button" onClick={onClose}>Close</button>
             </div>
         </form>

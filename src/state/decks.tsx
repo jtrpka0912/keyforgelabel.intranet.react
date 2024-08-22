@@ -5,6 +5,7 @@ interface State {
     isLoading: boolean;
     decks: Deck[];
     error: string;
+    maxDecks: number;
 }
 
 export enum Actions {
@@ -22,12 +23,11 @@ type Action =
     | { type: Actions.RELOAD_DECKS; payload: Deck[] }
     | { type: Actions.CLEAR_DECKS; }
 
-
-
 const initialState: State = {
     isLoading: false,
     decks: [],
-    error: ''
+    error: '',
+    maxDecks: 36
 };
 
 /**

@@ -67,6 +67,11 @@
             .upload__form-submit-button {
                 background-color: darkgreen;
                 color: #fff;
+
+                &:disabled {
+                    cursor: not-allowed;
+                    background-color: #aaa;
+                }
             }
         }
     }

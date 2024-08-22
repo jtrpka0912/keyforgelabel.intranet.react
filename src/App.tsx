@@ -1,5 +1,6 @@
 import './App.css';
 import ClearButton from './components/clear-button/clear-button';
+import Counter from './components/counter/counter';
 import Page from "./components/page/page"
 import Upload from "./components/upload/upload"
 import DecksProvider from './state/decks';
@@ -17,6 +18,7 @@ function App() {
         <Page />
         <Upload />
         <ClearButton />
+        <Counter />
       </DecksProvider>
     </main>
   )

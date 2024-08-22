@@ -21,8 +21,6 @@ const Page = () => {
             const decksStorageArray: string[] = JSON.parse(decksStorageString);
 
             decksStorageArray.forEach((deckString) => {
-                console.info(decksStorageArray);
-                console.info(decksContext.state.decks);
                 const deck = new Deck(deckString);
 
                 if(decksContext.state.decks.findIndex((deckState) => deckState.id === deck.id) === -1) {

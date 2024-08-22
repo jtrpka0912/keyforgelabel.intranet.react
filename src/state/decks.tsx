@@ -1,15 +1,15 @@
 import React from 'react';
-import { DeckResponse } from "../models/keyforge/deck-response";
+import { Deck } from '../entities/keyforge/deck';
 
 interface State {
     isLoading: boolean;
-    decks: DeckResponse[];
+    decks: Deck[];
     error: string;
 }
 
 type Action = 
     | { type: 'RETRIEVE_DECK_PENDING'; payload: null }
-    | { type: 'RETRIEVE_DECK_SUCCESS'; payload: DeckResponse }
+    | { type: 'RETRIEVE_DECK_SUCCESS'; payload: Deck }
     | { type: 'RETRIEVE_DECK_FAIL'; payload: string }
     | { type: 'CLEAR_DECKS'; payload: null }
 

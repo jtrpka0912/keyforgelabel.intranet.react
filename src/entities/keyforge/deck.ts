@@ -41,12 +41,12 @@ type DeckHouseObject = {
  * @prop {DeckHouse} houseThree 
  */
 export class Deck {
-    private _id: string;
-    private _name: string;
-    private _expansion: string;
-    private _houseOne: DeckHouse;
-    private _houseTwo: DeckHouse;
-    private _houseThree: DeckHouse;
+    private readonly _id: string;
+    private readonly _name: string;
+    private readonly _expansion: string;
+    private readonly _houseOne: DeckHouse;
+    private readonly _houseTwo: DeckHouse;
+    private readonly _houseThree: DeckHouse;
 
     /**
      * @constructor
@@ -55,17 +55,30 @@ export class Deck {
      * @this {Deck}
      * @param {DeckResponse} deckData 
      */
-    constructor(deckData: DeckResponse) {
-        const houseOneData = deckData._linked.houses[0];
-        const houseTwoData = deckData._linked.houses[1];
-        const houseThreeData = deckData._linked.houses[2];
+    constructor(deckData: DeckResponse | string) {
+        if(typeof deckData === 'string') {
+            // From local storage
+            const json: DeckObject = JSON.parse(deckData);
 
-        this._id = deckData.data.id;
-        this._name = deckData.data.name;
-        this._expansion = Deck.getExpansionName(deckData.data.expansion);
-        this._houseOne = new DeckHouse(houseOneData.name, houseOneData.image);
-        this._houseTwo = new DeckHouse(houseTwoData.name, houseTwoData.image);
-        this._houseThree = new DeckHouse(houseThreeData.name, houseThreeData.image);
+            this._id = json.id;
+            this._name = json.name;
+            this._expansion = json.expansion;
+            this._houseOne = new DeckHouse(json.houseOne.name, json.houseOne.path);
+            this._houseTwo = new DeckHouse(json.houseTwo.name, json.houseTwo.path);
+            this._houseThree = new DeckHouse(json.houseThree.name, json.houseThree.path);
+        } else {
+            // From API
+            const houseOneData = deckData._linked.houses[0];
+            const houseTwoData = deckData._linked.houses[1];
+            const houseThreeData = deckData._linked.houses[2];
+
+            this._id = deckData.data.id;
+            this._name = deckData.data.name;
+            this._expansion = Deck.getExpansionName(deckData.data.expansion);
+            this._houseOne = new DeckHouse(houseOneData.name, houseOneData.image);
+            this._houseTwo = new DeckHouse(houseTwoData.name, houseTwoData.image);
+            this._houseThree = new DeckHouse(houseThreeData.name, houseThreeData.image);
+        }
     }
 
     // Make the properties read only

@@ -12,7 +12,12 @@ export enum Expansions {
     GrimReminders = 700,
     Menagerie2024 = 722,
     VaultMasters2024 = 737,
-    // TODO: Add the new ones
+    AemberSkies = 800,
+    TokensOfChange = 855,
+    MoreMutation = 874,
+    PropheticVisions = 886,
+    MartianCivilWar = 892,
+    Discovery = 907
 }
 
 type DeckObject = {
@@ -139,6 +144,12 @@ export class Deck {
             case Expansions.GrimReminders: return 'Grim Reminders';
             case Expansions.Menagerie2024: return 'Menagerie 2024';
             case Expansions.VaultMasters2024: return 'Vault Masters 2024';
+            case Expansions.AemberSkies: return 'Æmber Skies';
+            case Expansions.TokensOfChange: return 'Tokens of Change';
+            case Expansions.MoreMutation: return 'More Mutation';
+            case Expansions.PropheticVisions: return 'Prophetic Visions';
+            case Expansions.MartianCivilWar: return 'Martian Civil War';
+            case Expansions.Discovery: return 'Discovery';
             default: return 'Unknown Expansion';
         }
     }

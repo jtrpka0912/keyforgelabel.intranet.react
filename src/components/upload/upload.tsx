@@ -3,7 +3,7 @@ import './upload.css';
 import { UploadButtonProps, UploadDialogProps, UploadFormProps } from './upload.types';
 import Input from '../input/input';
 import { getDeck } from '../../api/keyforge';
-import { DeckResponse } from '../../models/keyforge/deck';
+import { DeckResponse } from '../../models/keyforge/deck-response';
 import { Actions, DecksContext } from '../../state/decks';
 
 /**

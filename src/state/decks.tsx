@@ -1,5 +1,5 @@
 import React from 'react';
-import { DeckResponse } from "../models/keyforge/deck";
+import { DeckResponse } from "../models/keyforge/deck-response";
 
 interface State {
     isLoading: boolean;

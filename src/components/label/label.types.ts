@@ -1,4 +1,4 @@
-import { DeckResponse } from "../../models/keyforge/deck"
+import { DeckResponse } from "../../models/keyforge/deck-response"
 
 type LabelProps = {
     deck: DeckResponse;

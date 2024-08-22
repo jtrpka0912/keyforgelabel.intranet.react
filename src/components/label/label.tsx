@@ -1,4 +1,4 @@
-import { Expansions } from '../../models/keyforge/deck';
+import { Expansions } from '../../models/keyforge/deck-response';
 import './label.css';
 import LabelProps from './label.types';
 

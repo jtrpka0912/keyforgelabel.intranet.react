@@ -1,4 +1,4 @@
-import { DeckResponse } from "../models/keyforge/deck";
+import { DeckResponse } from "../models/keyforge/deck-response";
 
 const baseURL: string = 'https://www.keyforgegame.com/api';
 

@@ -15,4 +15,8 @@
     border-radius: 50%;
     color: #fff;
     font-size: 1.1em;
+
+    @media print {
+        display: none;
+    }
 }

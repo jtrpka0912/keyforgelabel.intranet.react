@@ -5,4 +5,8 @@
 
     font-size: 2.0em;
     font-weight: 700;
+
+    @media print {
+        display: none;
+    }
 }

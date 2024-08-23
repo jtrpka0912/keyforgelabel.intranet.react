@@ -7,6 +7,9 @@ body {
 }
 
 @page {
+    /* 8.5" x 11.0" */
     margin: 0;
+    margin-top: 0.125in;
+    margin-left: 0.25in;
     size: 8.5in 11in;
 }

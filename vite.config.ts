@@ -7,7 +7,7 @@ import react from '@vitejs/plugin-react';
 //   plugins: [react()],
 // });
 
-export default defineConfig(({command, mode} : ConfigEnv) => {
+export default defineConfig(({mode} : ConfigEnv) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
